@@ -7,7 +7,6 @@ type ConnectionObject = {
 
 const connection: ConnectionObject = {};
 
-// MISTRY-MESSAGES
 const connectionDB = async (): Promise<void> => {
   if (connection.isConnected) {
     console.log('Already connected to database');
@@ -16,10 +15,15 @@ const connectionDB = async (): Promise<void> => {
 
   try {
     const url: string = config.db.url;
-    await mongoose.connect(url, {
+    const db = await mongoose.connect(url, {
       dbName: 'MISTRY-MESSAGES',
     });
-  } catch (error) {}
+    connection.isConnected = db.connections[0].readyState;
+    console.log('Database Connected Successfully!');
+  } catch (error) {
+    console.error('Database Connection Failed!', error);
+    process.exit(1);
+  }
 };
 
 export default connectionDB;
