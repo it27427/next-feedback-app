@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
-
 import config from '@/config/config';
+import mongoose from 'mongoose';
 
 type ConnectionObject = {
   isConnected?: number;
