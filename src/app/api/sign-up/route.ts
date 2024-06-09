@@ -1,6 +1,6 @@
 import connectionDB from '@/lib/db.connection';
 import UserModel from '@/model/User.model';
-// import bcrypt from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 // import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
 
@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
   await connectionDB();
 
   try {
-    const { username, email, password } = await req.json();
+    const { username, email, phoneNumber, password } = await req.json();
     const existingVerifiedByUsername = await UserModel.findOne({
       username,
       isVerified: true,
@@ -25,6 +25,7 @@ export const POST = async (req: Request) => {
     }
 
     const existingVerifiedByEmail = await UserModel.findOne({ email });
+    const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
     if (existingVerifiedByEmail) {
       Response.json(
@@ -34,6 +35,24 @@ export const POST = async (req: Request) => {
         },
         { status: 400 }
       );
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const expiryDate = new Date();
+      expiryDate.setHours(expiryDate.getHours() + 1);
+
+      const newUser = new UserModel({
+        username,
+        email,
+        phoneNumber,
+        password: hashedPassword,
+        verifyCode,
+        verifyCodeExpiry: expiryDate,
+        isVerified: false,
+        isAcceptingMessage: true,
+        messages: [],
+      });
+
+      await newUser.save();
     }
   } catch (error) {
     console.error('Error registering user', error);
