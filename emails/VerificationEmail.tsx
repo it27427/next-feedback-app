@@ -15,10 +15,7 @@ interface VerificationEmailProps {
   otp: string;
 }
 
-export const VerificationEmail = ({
-  username,
-  otp,
-}: VerificationEmailProps) => {
+const VerificationEmail = ({ username, otp }: VerificationEmailProps) => {
   return (
     <Html lang='en' dir='ltr'>
       <Head>
