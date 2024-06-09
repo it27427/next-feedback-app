@@ -2,7 +2,7 @@ import connectionDB from '@/lib/db.connection';
 import UserModel from '@/model/User.model';
 import bcrypt from 'bcryptjs';
 
-// import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
+import { sendVerificationEmail } from '@/helpers/sendVerificationEmail';
 
 export const POST = async (req: Request) => {
   await connectionDB();
@@ -54,6 +54,8 @@ export const POST = async (req: Request) => {
 
       await newUser.save();
     }
+
+    await sendVerificationEmail(username, email, verifyCode);
   } catch (error) {
     console.error('Error registering user', error);
     return Response.json(
