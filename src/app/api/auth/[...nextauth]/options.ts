@@ -37,10 +37,23 @@ export const authOptions: NextAuthOptions = {
             credentials.password,
             user.password
           );
+
+          if (isPasswordCorrect) {
+            return user;
+          } else {
+            throw new Error('Incorrect Password!');
+          }
         } catch (error: any) {
           throw new Error(error);
         }
       },
     }),
   ],
+  pages: {
+    signIn: '/sign-in',
+  },
+  session: {
+    strategy: 'jwt',
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
