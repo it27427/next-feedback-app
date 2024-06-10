@@ -29,7 +29,7 @@ export const authOptions: NextAuthOptions = {
           }
 
           if (!user.isVerified) {
-            throw new Error('Please verify your account first.');
+            throw new Error('Please verify your account before login.');
           }
         } catch (error: any) {
           throw new Error(error);
