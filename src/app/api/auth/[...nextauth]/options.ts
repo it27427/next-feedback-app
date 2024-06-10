@@ -33,7 +33,10 @@ export const authOptions: NextAuthOptions = {
             throw new Error('Please verify your account before login.');
           }
 
-          await bcrypt.compare(credentials.password, user.password);
+          const isPasswordCorrect = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
         } catch (error: any) {
           throw new Error(error);
         }
