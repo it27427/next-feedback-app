@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Source_Sans_3 } from 'next/font/google';
 import './globals.css';
 
+import AuthProvider from '@/context/AuthProvider';
+
 const sourcesans = Source_Sans_3({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -16,9 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={sourcesans.className} suppressHydrationWarning={true}>
-        {children}
-      </body>
+      <AuthProvider>
+        <body className={sourcesans.className} suppressHydrationWarning={true}>
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }
