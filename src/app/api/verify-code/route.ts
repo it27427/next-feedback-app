@@ -20,6 +20,7 @@ export async function POST(request: Request) {
     }
 
     const isCodeValid = user.verifyCode === code;
+    const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
   } catch (error) {
     console.error('Error verifying user', error);
     return Response.json(
