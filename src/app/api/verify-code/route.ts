@@ -6,6 +6,9 @@ export async function POST(request: Request) {
 
   try {
     const { username, code } = await Response.json({});
+
+    const decodedUsername = decodeURIComponent(username);
+    const user = await UserModel.findOne({ username: decodedUsername });
   } catch (error) {
     console.error('Error verifying user', error);
     return Response.json(
