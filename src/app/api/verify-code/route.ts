@@ -9,6 +9,7 @@ export async function POST(request: Request) {
 
     const decodedUsername = decodeURIComponent(username);
     const user = await UserModel.findOne({ username: decodedUsername });
+
     if (!user) {
       return Response.json(
         {
@@ -21,6 +22,9 @@ export async function POST(request: Request) {
 
     const isCodeValid = user.verifyCode === code;
     const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
+
+    if (isCodeValid && isCodeNotExpired) {
+    }
   } catch (error) {
     console.error('Error verifying user', error);
     return Response.json(
