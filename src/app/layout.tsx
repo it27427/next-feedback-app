@@ -1,6 +1,7 @@
-import '@/assets/css/globals.css';
 import type { Metadata } from 'next';
 import { Source_Sans_3 } from 'next/font/google';
+
+import '@/assets/css/globals.css';
 
 import AuthProvider from '@/context/AuthProvider';
 
