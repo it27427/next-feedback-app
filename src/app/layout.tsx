@@ -23,9 +23,7 @@ export default function RootLayout({
       <AuthProvider>
         <body className={sourcesans.className} suppressHydrationWarning={true}>
           <header>
-            <figure>
-              <Logo />
-            </figure>
+            <Logo />
           </header>
           <main>{children}</main>
         </body>
