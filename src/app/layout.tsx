@@ -3,6 +3,7 @@ import { Source_Sans_3 } from 'next/font/google';
 
 import '@/assets/css/globals.css';
 
+import Logo from '@/components/Logo';
 import AuthProvider from '@/context/AuthProvider';
 
 const sourcesans = Source_Sans_3({ subsets: ['latin'] });
@@ -21,7 +22,12 @@ export default function RootLayout({
     <html lang='en'>
       <AuthProvider>
         <body className={sourcesans.className} suppressHydrationWarning={true}>
-          {children}
+          <header>
+            <figure>
+              <Logo />
+            </figure>
+          </header>
+          <main>{children}</main>
         </body>
       </AuthProvider>
     </html>
